@@ -3,13 +3,14 @@ package com.microservices.workhourservice.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import org.springframework.data.couchbase.config.AbstractCouchbaseConfiguration;
 
 @Configuration
 public class CouchbaseCnf extends AbstractCouchbaseConfiguration {
 
     @Autowired
-    private ApplicationContext context;
+    private Environment env;
 
 //    @Value("{app.couchbase.connection-string}")
 //    private String connectionString;
@@ -28,53 +29,22 @@ public class CouchbaseCnf extends AbstractCouchbaseConfiguration {
 
     @Override
     public String getConnectionString() {
-        return "couchbase://127.0.0.1";
+        return env.getProperty("app.couchbase.host");
     }
 
     @Override
     public String getUserName() {
-        return "admin";
+        return env.getProperty("app.couchbase.username");
     }
 
     @Override
     public String getPassword() {
-        return "admin123";
+        return env.getProperty("app.couchbase.password");
     }
 
     @Override
     public String getBucketName() {
-        return "EmployeeLeave";
+        return env.getProperty("app.couchbase.bucket-employeeLeave");
     }
 
-//    @Override
-//    protected void configureRepositoryOperationsMapping(RepositoryOperationsMapping mapping) {
-//        mapping.mapEntity(EmployeeLeaveEntity.class, getCouchbaseTemplate("EmployeeLeave"));
-////        mapping.mapEntity(EmployeeSalaryEntity.class, getCouchbaseTemplate("EmployeeSalary"));
-//    }
-//
-//    private CouchbaseTemplate getCouchbaseTemplate(String bucketName) {
-//        CouchbaseTemplate template = null;
-//        try {
-//            template = new CouchbaseTemplate(
-//                    couchbaseClientFactory(bucketName),
-//                    mappingCouchbaseConverter(
-//                            couchbaseMappingContext(customConversions()),
-//                            new CouchbaseCustomConversions(Collections.emptyList())
-//                    )
-//            );
-//            template.setApplicationContext(context);
-//        } catch (Exception e) {
-//            System.out.println(e);
-//        }
-//        return template;
-//    }
-//
-//    private CouchbaseClientFactory couchbaseClientFactory(String bucketName) {
-//        return new SimpleCouchbaseClientFactory(
-//                couchbaseCluster(
-//                        couchbaseClusterEnvironment()),
-//                        bucketName,
-//                        this.getScopeName()
-//        );
-//    }
 }
