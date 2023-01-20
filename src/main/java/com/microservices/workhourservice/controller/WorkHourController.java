@@ -1,6 +1,7 @@
 package com.microservices.workhourservice.controller;
 
 import com.microservices.workhourservice.db.entity.EmployeeLeaveEntity;
+import com.microservices.workhourservice.model.Leave;
 import com.microservices.workhourservice.service.WorkHourService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,13 +18,8 @@ public class WorkHourController {
         return workHourService.saveData(empLeave);
     }
 
-    @GetMapping("/getCount/{empId}")
-    public int getEmployeeLeaveCount(@PathVariable String empId) {
-        return workHourService.getEmployeeLeaveCount(empId);
-    }
-
-    @GetMapping("/getDaysInMonth/{empId}")
-    public int getDaysInMonth(@PathVariable String empId) {
-        return workHourService.getDaysInMonth(empId);
+    @GetMapping("/{empId}")
+    public Leave getEmployeeLeaveDetails(@PathVariable String empId) {
+        return workHourService.getEmployeeLeaveDetails(empId);
     }
 }

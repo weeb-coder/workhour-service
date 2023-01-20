@@ -2,8 +2,10 @@ package com.microservices.workhourservice.service;
 
 import com.microservices.workhourservice.db.entity.EmployeeLeaveEntity;
 import com.microservices.workhourservice.db.repository.WorkHourRepo;
+import com.microservices.workhourservice.model.Leave;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Service
 public class WorkHourService {
@@ -16,11 +18,22 @@ public class WorkHourService {
         return "Employee Leave details saved successfully";
     }
 
-    public int getEmployeeLeaveCount(String id) {
+    public Leave getEmployeeLeaveDetails(@PathVariable String empId) {
+        int count = getEmployeeLeaveCount(empId);
+        int daysInMonth = getDaysInMonth(empId);
+
+        return new Leave
+                .LeaveBuilder()
+                .setCount(count)
+                .setDaysInMonth(daysInMonth)
+                .build();
+    }
+
+    private int getEmployeeLeaveCount(String id) {
         return repo.findById(id).orElseThrow().getCount();
     }
 
-    public int getDaysInMonth(String id) {
+    private int getDaysInMonth(String id) {
         int yearMonth = repo.findById(id).orElseThrow().getYearMonth();
         int year = Integer.parseInt(("" + yearMonth).substring(0, 4));
         int month = yearMonth % 100;
