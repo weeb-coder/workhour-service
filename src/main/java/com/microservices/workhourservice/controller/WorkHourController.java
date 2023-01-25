@@ -3,6 +3,7 @@ package com.microservices.workhourservice.controller;
 import com.microservices.workhourservice.db.entity.EmployeeLeaveEntity;
 import com.microservices.workhourservice.model.Leave;
 import com.microservices.workhourservice.service.WorkHourService;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +20,16 @@ public class WorkHourController {
     }
 
     @GetMapping("/{empId}")
+    @CircuitBreaker(name = "employee-leave-details", fallbackMethod = "getEmployeeLeaveDetailsFallbackResponse")
     public Leave getEmployeeLeaveDetails(@PathVariable String empId) {
         return workHourService.getEmployeeLeaveDetails(empId);
+    }
+
+    private Leave getEmployeeLeaveDetailsFallbackResponse(Exception e) {
+        return new Leave
+                .LeaveBuilder()
+                .setCount(-1)
+                .setDaysInMonth(-1)
+                .build();
     }
 }
