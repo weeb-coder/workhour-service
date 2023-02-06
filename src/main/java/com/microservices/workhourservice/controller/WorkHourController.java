@@ -1,6 +1,7 @@
 package com.microservices.workhourservice.controller;
 
 import com.microservices.workhourservice.db.entity.EmployeeLeaveEntity;
+import com.microservices.workhourservice.model.EmployeeDetails;
 import com.microservices.workhourservice.model.Leave;
 import com.microservices.workhourservice.service.WorkHourService;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
@@ -17,6 +18,11 @@ public class WorkHourController {
     @PostMapping("/addEmployee")
     public String saveDate(@RequestBody EmployeeLeaveEntity empLeave) {
         return workHourService.saveData(empLeave);
+    }
+
+    @PostMapping
+    public Leave getEmployeeLeaveDetail(@RequestBody EmployeeDetails emp) {
+        return workHourService.getEmployeeLeaveDetail(emp);
     }
 
     @GetMapping("/{empId}")
