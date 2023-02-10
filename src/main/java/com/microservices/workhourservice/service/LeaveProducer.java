@@ -1,4 +1,4 @@
-package com.microservices.workhourservice.kafka;
+package com.microservices.workhourservice.service;
 
 import com.microservices.workhourservice.model.Leave;
 import org.apache.kafka.clients.admin.NewTopic;

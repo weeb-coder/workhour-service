@@ -1,5 +1,6 @@
-package com.microservices.workhourservice.kafka;
+package com.microservices.workhourservice.controller;
 
+import com.microservices.workhourservice.service.LeaveProducer;
 import com.microservices.workhourservice.model.Leave;
 import com.microservices.workhourservice.service.WorkHourService;
 import org.slf4j.Logger;

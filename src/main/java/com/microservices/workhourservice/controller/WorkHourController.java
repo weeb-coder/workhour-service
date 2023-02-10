@@ -22,7 +22,7 @@ public class WorkHourController {
 
     @PostMapping
     public Leave getEmployeeLeaveDetail(@RequestBody EmployeeDetails emp) {
-        return workHourService.getEmployeeLeaveDetail(emp);
+        return workHourService.getEmployeeLeaveDetails(emp);
     }
 
     @GetMapping("/{empId}")
